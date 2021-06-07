@@ -1,0 +1,38 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using System.Data.SqlClient;
+namespace STAJ_TAKÝP_SÝSTEMÝ
+{
+    public partial class Kurum : Form
+    {
+        public Kurum()
+        {
+            InitializeComponent();
+        }
+    }
+       
+        private void Form1_Load(object sender, EventArgs e)
+        {
+        }
+
+       private void button8_Click(object sender, EventArgs e)
+        {
+            SqlCommand sil = new SqlCommand("delete from firma_basvurular where Id='" + dataGridView1.CurrentRow.Cells[0].Value.ToString()+"'", baglanti.baglan());
+            sil.ExecuteNonQuery();
+            MessageBox.Show("Öðrenci Staj Kabulu Reddedilmiþtir.");
+            kurum_basvuru_doldur();
+        }
+
+
+
+
+
+   }
+}
