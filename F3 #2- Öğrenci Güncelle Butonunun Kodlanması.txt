@@ -1,0 +1,49 @@
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using System.Data.SqlClient;
+
+namespace STAJ_TAKİP_SİSTEMİ
+{
+    public partial class Form4 : Form
+    {
+        public Form4()
+        {
+            InitializeComponent();
+        }
+        SqlConnection baglanti = new SqlConnection("Data Source=localhost;Initial Catalog=StajSistemi;Integrated Security=True");
+        SqlDataAdapter da;
+        DataSet ds;
+        SqlCommandBuilder cmdb;
+ public void kayıtdoldur()
+        {
+            baglanti.Open();
+            da = new SqlDataAdapter("Select * from OgrenciKayit", baglanti);
+            cmdb = new SqlCommandBuilder(da);
+            ds = new DataSet();
+            da.Fill(ds, "OgrenciKayit");
+            dataGridView1.DataSource = ds.Tables[0];
+
+
+            baglanti.Close();
+        }
+
+
+private void button1_Click(object sender, EventArgs e)
+        {
+            baglanti.Open();
+
+            SqlCommand cmd = new SqlCommand("update OgrenciKayit set OgrenciNo='" + textBox3.Text + "',OgrenciTC='" + textBox1.Text + "',Adi='" + textBox2.Text + "',Soyadi='" + textBox4.Text+ "',Bolumu='" + textBox5.Text + "',Programi='" + textBox6.Text + "',EgitimOgretim='" + textBox7.Text + "',StajDurumu='" + textBox8.Text + "'  where OgrenciNo='" + dataGridView1.CurrentRow.Cells[1].Value.ToString() + "'", baglanti);
+            cmd.ExecuteNonQuery();
+
+            MessageBox.Show("kayıt güncellendi", "BİLGİ", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            baglanti.Close();
+            kayıtdoldur();
+        }
+    }
+}
