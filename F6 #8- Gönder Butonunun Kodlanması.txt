@@ -1,0 +1,70 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using System.Data.SqlClient;
+
+namespace STAJ_TAKİP_SİSTEMİ
+{
+    public partial class OgrenciBasvuru : Form
+    {
+      
+        public OgrenciBasvuru()
+        {
+            InitializeComponent();
+        }
+        SqlConnection baglanti = new SqlConnection("Data Source=localhost;Initial Catalog=StajSistemi;Integrated Security=True");
+        SqlDataAdapter da;
+        DataSet ds;
+        SqlCommandBuilder cmdb;
+
+        public void kayıtdoldur()
+        {
+            baglanti.Open();
+            da = new SqlDataAdapter("Select * from OgrenciBasvuru", baglanti);
+            cmdb = new SqlCommandBuilder(da);
+            ds = new DataSet();
+            da.Fill(ds, "OgrenciBasvuru");
+           
+
+
+            baglanti.Close();
+        }
+        private void groupBox1_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            string firmaadi = textBox1.Text.Trim();
+            DateTime baslamatarihi = dateTimePicker1.Value;
+            string sqlBaslamaTarihi = baslamatarihi.ToString("yyyy-MM-dd HH:mm:ss.fff");
+            DateTime bitirmetarihi = dateTimePicker2.Value;
+            string sqlBitirmeTarihi = bitirmetarihi.ToString("yyyy-MM-dd HH:mm:ss.fff");
+            string mesajiniz = textBox4.Text.Trim();
+
+
+            SqlCommand cmd = new SqlCommand("insert into OgrenciBasvuru (FirmaAdi,BaslamaTarihi,BitirmeTarihi,Mesaj) values ('" + firmaadi + "','" + baslamatarihi + "','" + bitirmetarihi + "','" + mesajiniz + "')");
+
+            cmd.CommandType = CommandType.Text;
+            cmd.Connection = baglanti;
+            baglanti.Open();
+            int rowsAffected = cmd.ExecuteNonQuery();
+            baglanti.Close();
+            kayıtdoldur();
+        }
+
+        private void OgrenciBasvuru_Load(object sender, EventArgs e)
+        {
+            kayıtdoldur();
+        }
+
+      
+    }
+}
