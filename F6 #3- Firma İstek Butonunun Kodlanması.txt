@@ -1,0 +1,38 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using System.IO;
+using System.Data.SqlClient;
+
+namespace Staj_Takip_Sistemi
+{
+    public partial class ogrenci_basvuru : Form
+    {
+        public ogrenci_basvuru()
+        {
+            InitializeComponent();
+        }
+        string yeniyol = "";
+        string pdfyeniyol = "";
+        public static string dosyayolum;
+        sqlbaglantisi baglanti = new sqlbaglantisi();
+        private void ogrenci_basvuru_Load(object sender, EventArgs e)
+        {
+            aktifol();
+        }
+        public void aktifol()
+        {
+   
+            textBox1.Text = ogrenci.secili_firma.ToString();
+            lbl_ilan.Text = ogrenci.secili_basvuru.ToString();
+            textBox2.Text = ogrenci.secili_baslangic.ToString();
+            textBox3.Text = ogrenci.secili_bitis.ToString();
+        }
+   }
+}
